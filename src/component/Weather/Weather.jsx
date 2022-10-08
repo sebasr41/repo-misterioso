@@ -7,7 +7,7 @@ import { WeathersContext } from "../../context/WeathersContext";
 import { FavoritesContext } from "../../context/FavoritesContext";
 
 const Weather = ({ weather }) => {
-  const { id, latitude, longitude, name, favorite } = weather;
+  const { id, latitude, longitude, timezone, favorite } = weather;
   const { weathers, setWeathers } = useContext(WeathersContext);
   const { favorites, setFavorites } = useContext(FavoritesContext);
   const [isFavorite, setIsFavorite] = useState(favorite);
@@ -17,84 +17,86 @@ const Weather = ({ weather }) => {
 
   useEffect(() => {
     dataStored = localStorage.getItem("data");
-    if (dataStored) {
-      setDataParsed(JSON.parse(dataStored));
-      // setCurrentUser(dataParsed.user);
-    }
+    setDataParsed(JSON.parse(dataStored));
   }, []);
 
   const handleEliminate = () => {
-    setWeathers(weathers.filter((weather) => weather.id !== id));
+    const filteredData = weathers.filter((weather) => weather.id !== id);
+    setWeathers(filteredData);
+    localStorage.setItem(
+      "data",
+      JSON.stringify({ user: dataParsed.user, weathers: [...filteredData] })
+    );
   };
 
-  const handleFavorite = () => {
-    const foundIndex = dataParsed.weathers.findIndex((fav) => fav.id === id);
-    setIsFavorite(!isFavorite);
-    const { user, weathers } = dataParsed;
+  // const handleFavorite = () => {
+  //   setIsFavorite(!isFavorite);
+  //   const foundIndex = dataParsed.weathers.findIndex((fav) => fav.id === id);
+  //   const { user, weathers } = dataParsed;
 
-    if (foundIndex === -1) {
-      console.log("hiii");
+  //   if (foundIndex === -1) {
+  //     console.log("hiii");
 
-      const anothers = weathers.map((item) => ({
-        id: item.id,
-        latitude: item.latitude,
-        longitude: item.longitude,
-        name: item.name,
-        favorite: item.favorite,
-      }));
+  //     const anothers = weathers.map((item) => ({
+  //       id: item.id,
+  //       latitude: item.latitude,
+  //       longitude: item.longitude,
+  //       name: item.name,
+  //       favorite: item.favorite,
+  //     }));
 
-      const another = {
-        id,
-        latitude,
-        longitude,
-        name,
-        favorite: !isFavorite,
-      };
+  //     const another = {
+  //       id,
+  //       latitude,
+  //       longitude,
+  //       name,
+  //       favorite: !isFavorite,
+  //     };
 
-      console.log("anothers => ", anothers);
+  //     console.log("anothers => ", anothers);
 
-      setDataParsed({ user, weathers: [...anothers, another] });
+  //     setDataParsed({ user, weathers: [...anothers, another] });
 
-      localStorage.setItem(
-        "data",
-        JSON.stringify({ user, weathers: [...anothers, another] })
-      );
+  //     localStorage.setItem(
+  //       "data",
+  //       JSON.stringify({ user, weathers: [...anothers, another] })
+  //     );
 
-      return;
-    }
+  //     return;
+  //   }
 
-    // Quitar de favoritos
-    const dataFiltered = dataParsed.weathers.filter((fav) => fav.id !== id);
+  //   // Quitar de favoritos
+  //   const dataFiltered = dataParsed.weathers.filter((fav) => fav.id !== id);
 
-    const asd = dataFiltered.map((item) => ({
-      id: item.id,
-      latitude: item.latitude,
-      longitude: item.longitude,
-      name: item.name,
-      favorite: item.favorite,
-    }));
+  //   const asd = dataFiltered.map((item) => ({
+  //     id: item.id,
+  //     latitude: item.latitude,
+  //     longitude: item.longitude,
+  //     name: item.name,
+  //     favorite: item.favorite,
+  //   }));
 
-    setDataParsed({
-      user: dataParsed.user,
-      weathers: asd,
-    });
+  //   setDataParsed({
+  //     user: dataParsed.user,
+  //     weathers: asd,
+  //   });
 
-    localStorage.setItem("data", JSON.stringify({ user, weathers: asd }));
-  };
+  //   localStorage.setItem("data", JSON.stringify({ user, weathers: asd }));
+  // };
 
   return (
     <div className="weather-container">
       <div className="weather">
-        <span>{name}</span>
+        <span>{timezone}</span>
 
         <span>{latitude}</span>
 
         <span>{longitude}</span>
       </div>
       <div className="weather-actions">
-        <div className="fav" onClick={handleFavorite}>
+        {/* <div className="fav" onClick={handleFavorite}>
           {isFavorite ? <FaHeart className="heart" /> : <FaRegHeart />}
-        </div>
+        </div> */}
         <div className="delete" onClick={handleEliminate}>
           <FaRegTimesCircle />
         </div>

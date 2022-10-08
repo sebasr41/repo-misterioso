@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getWeather } from "../../service";
 import { useNavigate } from "react-router-dom";
@@ -8,25 +8,18 @@ import { UserContext } from "../../context/UserContext";
 
 const WeatherCreation = () => {
   const { weathers, setWeathers } = useContext(WeathersContext);
-  // const { currentUser, setCurrentUser } = useContext(UserContext);
+  const [dataParsed, setDataParsed] = useState({});
+
+  let dataStored;
 
   const navigate = useNavigate();
 
-  let dataStored;
-  let dataParsed;
-  // useEffect(() => {
-  //   getWeather()
-  //     .then((data) => setWeathers(data))
-  //     .catch((err) => console.log(err));
-  // }, []);
-
-  // useEffect(() => {
-  //   dataStored = localStorage.getItem("data");
-
-  //   if (dataStored) {
-  //     dataParsed = JSON.parse(dataStored);
-  //   }
-  // }, []);
+  useEffect(() => {
+    dataStored = localStorage.getItem("data");
+    if (dataStored) {
+      setDataParsed(JSON.parse(dataStored));
+    }
+  }, []);
 
   const {
     register,
@@ -37,7 +30,6 @@ const WeatherCreation = () => {
       timezone: "Europe/London",
       latitude: "51.5002",
       longitude: "-0.1262",
-      favorite: false,
     },
   });
 
@@ -47,16 +39,31 @@ const WeatherCreation = () => {
       .then((res) => {
         const { temperature, weathercode, windspeed } = res.current_weather;
         const WeatherNew = {
-          id: weathers.length + 1,
-          name: data.timezone,
+          id: crypto.randomUUID(),
+          timezone: data.timezone,
           latitude: data.latitude,
           longitude: data.longitude,
           temperature,
           weathercode,
           windspeed,
-          favorite: false,
         };
+
+        const WeatherSimpleInfo = {
+          id: WeatherNew.id,
+          timezone: WeatherNew.timezone,
+          latitude: WeatherNew.latitude,
+          longitude: WeatherNew.longitude,
+        };
+
         setWeathers([...weathers, WeatherNew]);
+
+        localStorage.setItem(
+          "data",
+          JSON.stringify({
+            user: dataParsed.user,
+            weathers: [...dataParsed.weathers, WeatherSimpleInfo],
+          })
+        );
 
         navigate("/");
       })
