@@ -1,17 +1,31 @@
-import { useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { getWeather } from '../../service';
-import { useNavigate } from 'react-router-dom';
-import './WeatherCreation.css';
-import { WeathersContext } from '../../context/WeathersContext';
+import { useContext, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { getWeather } from "../../service";
+import { useNavigate } from "react-router-dom";
+import "./WeatherCreation.css";
+import { WeathersContext } from "../../context/WeathersContext";
+import { UserContext } from "../../context/UserContext";
 
 const WeatherCreation = () => {
   const { weathers, setWeathers } = useContext(WeathersContext);
+  // const { currentUser, setCurrentUser } = useContext(UserContext);
+
   const navigate = useNavigate();
+
+  let dataStored;
+  let dataParsed;
   // useEffect(() => {
   //   getWeather()
   //     .then((data) => setWeathers(data))
   //     .catch((err) => console.log(err));
+  // }, []);
+
+  // useEffect(() => {
+  //   dataStored = localStorage.getItem("data");
+
+  //   if (dataStored) {
+  //     dataParsed = JSON.parse(dataStored);
+  //   }
   // }, []);
 
   const {
@@ -20,9 +34,9 @@ const WeatherCreation = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      timezone: 'Europe/London',
-      latitude: '51.5002',
-      longitude: '-0.1262',
+      timezone: "Europe/London",
+      latitude: "51.5002",
+      longitude: "-0.1262",
     },
   });
 
@@ -41,14 +55,14 @@ const WeatherCreation = () => {
           windspeed,
         };
         setWeathers([...weathers, WeatherNew]);
-        localStorage.setItem('weathers', JSON.stringify(data));
-        navigate('/');
+
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
 
   const getData = () => {
-    console.log('weathers => ', weathers);
+    console.log("weathers => ", weathers);
   };
 
   return (
@@ -59,8 +73,8 @@ const WeatherCreation = () => {
           className="input-weather-name-form"
           type="text"
           placeholder="Nombre de la ciudad"
-          {...register('timezone', {
-            required: 'You must enter a name',
+          {...register("timezone", {
+            required: "You must enter a name",
           })}
         />
         <p>{errors.timezone?.message}</p>
@@ -68,16 +82,16 @@ const WeatherCreation = () => {
           className="input-weather-name-form"
           type="text"
           placeholder="Enter latitude"
-          {...register('latitude', {
-            required: 'You must enter a latitude',
+          {...register("latitude", {
+            required: "You must enter a latitude",
           })}
         />
         <input
           className="input-weather-name-form"
           type="text"
           placeholder="Enter longitude"
-          {...register('longitude', {
-            required: 'You must enter a longitude',
+          {...register("longitude", {
+            required: "You must enter a longitude",
           })}
         />
         <p>{errors.tag?.message}</p>

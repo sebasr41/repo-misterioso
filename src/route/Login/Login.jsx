@@ -1,8 +1,8 @@
-import { useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
-import './Login.css';
+import { useContext, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+import "./Login.css";
 
 const Login = () => {
   const { setCurrentUser } = useContext(UserContext);
@@ -13,10 +13,45 @@ const Login = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    localStorage.setItem('currentUser', JSON.stringify(data));
-    setCurrentUser(data);
-    navigate('/');
+  let dataStored;
+  let dataParsed;
+  let dataToStorage;
+
+  useEffect(() => {
+    dataStored = localStorage.getItem("data");
+
+    if (dataStored) {
+      dataParsed = JSON.parse(dataStored);
+      // setCurrentUser(dataParsed.user);
+    }
+
+    if (!dataStored) {
+      dataToStorage = {
+        user: {},
+        weathers: [],
+      };
+    }
+  }, []);
+
+  const onSubmit = (user) => {
+    if (!dataParsed) {
+      dataToStorage.user = {
+        username: user.username,
+        password: user.password,
+      };
+      localStorage.setItem("data", JSON.stringify(dataToStorage));
+    }
+
+    if (dataParsed) {
+      dataParsed.user = {
+        username: user.username,
+        password: user.password,
+      };
+      localStorage.setItem("data", JSON.stringify(dataParsed));
+    }
+
+    setCurrentUser(user);
+    navigate("/");
   };
 
   return (
@@ -27,8 +62,8 @@ const Login = () => {
           className="input-form"
           type="text"
           placeholder="Nombre de usuario"
-          {...register('username', {
-            required: 'Debe ingresar su nombre de usuario',
+          {...register("username", {
+            required: "Debe ingresar su nombre de usuario",
           })}
         />
         <p>{errors.username?.message}</p>
@@ -36,8 +71,8 @@ const Login = () => {
           className="input-form"
           type="password"
           placeholder="Contraseña"
-          {...register('password', {
-            required: 'Debe ingresar su contraseña',
+          {...register("password", {
+            required: "Debe ingresar su contraseña",
           })}
         />
         <p>{errors.password?.message}</p>
