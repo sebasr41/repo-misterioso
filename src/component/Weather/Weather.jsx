@@ -7,10 +7,10 @@ import { WeathersContext } from "../../context/WeathersContext";
 import { FavoritesContext } from "../../context/FavoritesContext";
 
 const Weather = ({ weather }) => {
-  const { id, latitude, longitude, timezone } = weather;
+  const { id, latitude, longitude, name, favorite } = weather;
   const { weathers, setWeathers } = useContext(WeathersContext);
   const { favorites, setFavorites } = useContext(FavoritesContext);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorite);
   const [dataParsed, setDataParsed] = useState({});
 
   let dataStored;
@@ -28,41 +28,64 @@ const Weather = ({ weather }) => {
   };
 
   const handleFavorite = () => {
-    setIsFavorite((isFavorite) => !isFavorite);
-
     const foundIndex = dataParsed.weathers.findIndex((fav) => fav.id === id);
-
+    setIsFavorite(!isFavorite);
     const { user, weathers } = dataParsed;
 
     if (foundIndex === -1) {
-      setDataParsed({ user, weathers: [...weathers, weather] });
+      console.log("hiii");
+
+      const anothers = weathers.map((item) => ({
+        id: item.id,
+        latitude: item.latitude,
+        longitude: item.longitude,
+        name: item.name,
+        favorite: item.favorite,
+      }));
+
+      const another = {
+        id,
+        latitude,
+        longitude,
+        name,
+        favorite: !isFavorite,
+      };
+
+      console.log("anothers => ", anothers);
+
+      setDataParsed({ user, weathers: [...anothers, another] });
 
       localStorage.setItem(
         "data",
-        JSON.stringify({ user, weathers: [...weathers, weather] })
+        JSON.stringify({ user, weathers: [...anothers, another] })
       );
 
       return;
     }
 
-    //Quitar de favoritos
+    // Quitar de favoritos
     const dataFiltered = dataParsed.weathers.filter((fav) => fav.id !== id);
+
+    const asd = dataFiltered.map((item) => ({
+      id: item.id,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      name: item.name,
+      favorite: item.favorite,
+    }));
 
     setDataParsed({
       user: dataParsed.user,
-      weathers: dataFiltered,
+      weathers: asd,
     });
 
-    localStorage.setItem(
-      "data",
-      JSON.stringify({ user, weathers: dataFiltered })
-    );
+    localStorage.setItem("data", JSON.stringify({ user, weathers: asd }));
   };
 
   return (
     <div className="weather-container">
       <div className="weather">
-        <span>{timezone}</span>
+        <span>{name}</span>
 
         <span>{latitude}</span>
 

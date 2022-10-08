@@ -19,11 +19,12 @@ const Home = () => {
     console.log("weathersStored ", weathersStored);
   }, []);
 
-  console.log("weathers => ", weathers);
+  // console.log("weathers => ", weathers);
   return (
     <>
       <div className="main-container">
-        <Weathers weathers={[...weathers, ...weathersStored]} />
+        {/* <Weathers weathers={[...weathers, ...weathersStored]} /> */}
+        <Weathers weathers={weathers} />
       </div>
     </>
   );

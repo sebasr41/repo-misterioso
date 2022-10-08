@@ -37,6 +37,7 @@ const WeatherCreation = () => {
       timezone: "Europe/London",
       latitude: "51.5002",
       longitude: "-0.1262",
+      favorite: false,
     },
   });
 
@@ -53,6 +54,7 @@ const WeatherCreation = () => {
           temperature,
           weathercode,
           windspeed,
+          favorite: false,
         };
         setWeathers([...weathers, WeatherNew]);
 

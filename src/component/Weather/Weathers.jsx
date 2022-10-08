@@ -6,7 +6,7 @@ const Weathers = ({ weathers }) => {
       <h2>Hooo</h2>
       <div className="cards">
         {weathers.map((weather) => (
-          <Weather key={weather.name} weather={weather} />
+          <Weather key={weather.id} weather={weather} />
         ))}
       </div>
     </>
