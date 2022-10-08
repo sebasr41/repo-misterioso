@@ -10,16 +10,13 @@ const Weather = ({ weather }) => {
   const { id, latitude, longitude, timezone } = weather;
   const { weathers, setWeathers } = useContext(WeathersContext);
   const { favorites, setFavorites } = useContext(FavoritesContext);
-  const [isFavorite, setIsFavorite] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [dataParsed, setDataParsed] = useState({});
 
   let dataStored;
 
   useEffect(() => {
     dataStored = localStorage.getItem("data");
-
-    console.log("dataStored => ", dataStored);
-
     if (dataStored) {
       setDataParsed(JSON.parse(dataStored));
       // setCurrentUser(dataParsed.user);
@@ -33,30 +30,33 @@ const Weather = ({ weather }) => {
   const handleFavorite = () => {
     setIsFavorite((isFavorite) => !isFavorite);
 
-    console.log("dataParsed => ", dataParsed);
+    const foundIndex = dataParsed.weathers.findIndex((fav) => fav.id === id);
 
-    // const foundIndex = favorites.findIndex((fav) => fav.id === id);
-    const found = dataParsed.weathers?.find((fav) => fav.id === id);
+    const { user, weathers } = dataParsed;
 
-    if (found === undefined) {
-      const found = weathers.find((item) => item.id === id);
-      // setFavorites([...favorites, weather]);
+    if (foundIndex === -1) {
+      setDataParsed({ user, weathers: [...weathers, weather] });
 
-      setDataParsed(dataParsed.weathers?.push(found));
-      // const dataToStorage = {
-
-      //   dataParsed,
-      // };
-      localStorage.setItem("data", JSON.stringify(dataParsed));
+      localStorage.setItem(
+        "data",
+        JSON.stringify({ user, weathers: [...weathers, weather] })
+      );
 
       return;
     }
 
     //Quitar de favoritos
-    setDataParsed(
-      dataParsed.weathers?.filter((fav) => fav.id !== id) //!==
+    const dataFiltered = dataParsed.weathers.filter((fav) => fav.id !== id);
+
+    setDataParsed({
+      user: dataParsed.user,
+      weathers: dataFiltered,
+    });
+
+    localStorage.setItem(
+      "data",
+      JSON.stringify({ user, weathers: dataFiltered })
     );
-    localStorage.setItem("data", JSON.stringify(dataParsed));
   };
 
   return (
