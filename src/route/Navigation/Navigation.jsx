@@ -25,6 +25,9 @@ const Navigation = () => {
           <img src={logo} alt="Logo" className="logo" />
         </Link>
         <div className="nav-links-container">
+        <Link className="nav-link" to="/">
+              Home
+            </Link>
           {currentUser ? (
             <Link className="nav-link" to="/weather/create">
               New Weather
