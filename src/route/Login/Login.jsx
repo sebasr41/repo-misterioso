@@ -56,21 +56,29 @@ const Login = () => {
 
   return (
     <div className="sign-in-container">
-      <span>Ingresa con tu usuario y contraseña</span>
+            <div class="background">
+              <div class="shape"></div>
+              <div class="shape"></div>
+           </div>
       <form className="sign-in-form" onSubmit={handleSubmit(onSubmit)}>
+        <h3 className="form-welcome">Welcome Back!
+            <span className="form-subtitule">Login to your account.</span>
+        </h3>
+        <label>Username</label>
         <input
           className="input-form"
           type="text"
-          placeholder="Nombre de usuario"
+          placeholder="por ej. sebatech@gmail.com"
           {...register("username", {
             required: "Debe ingresar su nombre de usuario",
           })}
         />
         <p>{errors.username?.message}</p>
+        <label>Password</label>
         <input
           className="input-form"
           type="password"
-          placeholder="Contraseña"
+          placeholder="Minimo 6 caracteres"
           {...register("password", {
             required: "Debe ingresar su contraseña",
           })}

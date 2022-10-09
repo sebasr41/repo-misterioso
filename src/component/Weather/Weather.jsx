@@ -87,11 +87,12 @@ const Weather = ({ weather }) => {
   return (
     <div className="weather-container">
       <div className="weather">
-        <span>{timezone}</span>
+        <h4 className="weather-titule">Weather Location</h4>
+        <h6 className="weather-zone">{timezone}</h6>
+        
+        <h1 className="weather-latitude">{latitude}</h1>
 
-        <span>{latitude}</span>
-
-        <span>{longitude}</span>
+        <h1 className="weather-longitude">{longitude}</h1>
       </div>
       <div className="weather-actions">
         {/* <div className="fav" onClick={handleFavorite}>

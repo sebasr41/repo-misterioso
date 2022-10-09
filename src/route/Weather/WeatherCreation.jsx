@@ -76,8 +76,15 @@ const WeatherCreation = () => {
 
   return (
     <div className="weather-new-container">
-      <span>Add new weather</span>
+            <div class="background">
+              <div class="shape"></div>
+              <div class="shape"></div>
+           </div>
       <form className="weather-form" onSubmit={handleSubmit(onSubmit)}>
+         <h3 className="form-welcome">Add new clima!
+            <span className="form-subtitule">Just complete this information.</span>
+         </h3>
+         <label>Enter City</label>
         <input
           className="input-weather-name-form"
           type="text"
@@ -87,18 +94,20 @@ const WeatherCreation = () => {
           })}
         />
         <p>{errors.timezone?.message}</p>
+        <label>Enter Latitude</label>
         <input
           className="input-weather-name-form"
           type="text"
-          placeholder="Enter latitude"
+          placeholder="por ej. -23423"
           {...register("latitude", {
             required: "You must enter a latitude",
           })}
         />
+        <label>Enter Longitude</label>
         <input
           className="input-weather-name-form"
           type="text"
-          placeholder="Enter longitude"
+          placeholder="por ej 234234"
           {...register("longitude", {
             required: "You must enter a longitude",
           })}
@@ -109,7 +118,7 @@ const WeatherCreation = () => {
         </button>
       </form>
 
-      <button onClick={getData}>Get data</button>
+      {/* {<button onClick={getData}>Get data</button>} */}
     </div>
   );
 };
