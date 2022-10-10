@@ -76,15 +76,18 @@ const WeatherCreation = () => {
 
   return (
     <div className="weather-new-container">
-            <div class="background">
-              <div class="shape"></div>
-              <div class="shape"></div>
-           </div>
+      <div className="background">
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
       <form className="weather-form" onSubmit={handleSubmit(onSubmit)}>
-         <h3 className="form-welcome">Add new clima!
-            <span className="form-subtitule">Just complete this information.</span>
-         </h3>
-         <label>Enter City</label>
+        <h3 className="form-welcome">
+          Add new clima!
+          <span className="form-subtitule">
+            Just complete this information.
+          </span>
+        </h3>
+        <label>Enter City</label>
         <input
           className="input-weather-name-form"
           type="text"
