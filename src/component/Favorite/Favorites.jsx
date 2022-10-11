@@ -13,7 +13,7 @@ const Favorites = () => {
 
       {
         favorites.length === 0 ? (
-          <span>No hay paletas por aquí...</span>
+          <span>No hay ciudades por aquí...</span>
         ): (
           favorites.map((favorite) => (
             <Favorite key={favorite.id} favorite={favorite} />

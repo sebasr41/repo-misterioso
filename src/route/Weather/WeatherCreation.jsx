@@ -37,7 +37,8 @@ const WeatherCreation = () => {
     console.log(data);
     getWeather(data)
       .then((res) => {
-        const { temperature, weathercode, windspeed } = res.current_weather;
+        console.log("res=>", res)
+        const { temperature, weathercode, windspeed,time } = res.current_weather;
         const WeatherNew = {
           id: crypto.randomUUID(),
           timezone: data.timezone,
@@ -46,6 +47,7 @@ const WeatherCreation = () => {
           temperature,
           weathercode,
           windspeed,
+          time,
         };
 
         const WeatherSimpleInfo = {
@@ -82,7 +84,7 @@ const WeatherCreation = () => {
       </div>
       <form className="weather-form" onSubmit={handleSubmit(onSubmit)}>
         <h3 className="form-welcome">
-          Add new clima!
+          Add new weather!
           <span className="form-subtitule">
             Just complete this information.
           </span>

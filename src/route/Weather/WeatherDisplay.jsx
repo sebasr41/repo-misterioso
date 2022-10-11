@@ -10,15 +10,12 @@ const WeatherDisplay = () => {
   const { weathers } = useContext(WeathersContext);
   const [weather] = weathers.filter((weather) => weather.id === id);
   const [weatherInformation, setWeatherInformation] = useState(weather);
-  // const [dataParsed, setDataParsed] = useState({});
 
   console.log("weather => ", weather);
-  // console.log("weather.temperature => ", weather.temperature);
 
   useEffect(() => {
     if (!weather) {
       const dataStored = localStorage.getItem("data");
-      // setDataParsed(JSON.parse(dataStored));
       const dataParsed = JSON.parse(dataStored);
       console.log("dataParsed => ", dataParsed);
       const [weather] = dataParsed.weathers.filter(

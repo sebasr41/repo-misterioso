@@ -1,105 +1,97 @@
-import { FaRegTimesCircle } from "react-icons/fa";
-import { useContext, useEffect, useState } from "react";
-import "./Weather.css";
-import { Link } from "react-router-dom";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { WeathersContext } from "../../context/WeathersContext";
-import { FavoritesContext } from "../../context/FavoritesContext";
+import { FaHeart, FaRegHeart, FaRegTimesCircle } from 'react-icons/fa';
+import { useContext, useEffect, useState } from 'react';
+import './Weather.css';
+import { Link } from 'react-router-dom';
+import { WeathersContext } from '../../context/WeathersContext';
+import { FavoritesContext } from '../../context/FavoritesContext';
+import getWeather from '../../service';
 
 const Weather = ({ weather }) => {
-  const { id, latitude, longitude, timezone, favorite } = weather;
+  const { id, latitude, longitude, timezone, time } = weather;
   const { weathers, setWeathers } = useContext(WeathersContext);
   const { favorites, setFavorites } = useContext(FavoritesContext);
-  const [isFavorite, setIsFavorite] = useState(favorite);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [dataParsed, setDataParsed] = useState({});
-
-  let dataStored;
+  const [weatherInformation, setWeatherInformation] = useState(weather);
 
   useEffect(() => {
-    dataStored = localStorage.getItem("data");
-    setDataParsed(JSON.parse(dataStored));
+
+    const [weather] = weathers.filter((weather) => weather.id === id);
+    if (!weather) {
+      const dataStored = localStorage.getItem('data');
+      const dataParsed = JSON.parse(dataStored);
+      console.log('dataParsed => ', dataParsed);
+      const [weather] = dataParsed.weathers.filter(
+        (weather) => weather.id === id
+      );
+
+      getWeather(weather)
+        .then((data) => {
+          setWeatherInformation(data);
+        })
+        .catch((error) => console.log(error));
+      return;
+    }
+    if (!weather.time) {
+      getWeather(weather)
+        .then((data) => {
+          console.log('sin contexto solo ls => ', data);
+          setWeatherInformation(data);
+        })
+        .catch((error) => console.log(error));
+    }
   }, []);
 
   const handleEliminate = () => {
     const filteredData = weathers.filter((weather) => weather.id !== id);
     setWeathers(filteredData);
     localStorage.setItem(
-      "data",
+      'data',
       JSON.stringify({ user: dataParsed.user, weathers: [...filteredData] })
     );
   };
+  const handleFavorite = () => {
+    setIsFavorite((isFavorite) => !isFavorite);
 
-  // const handleFavorite = () => {
-  //   setIsFavorite(!isFavorite);
-  //   const foundIndex = dataParsed.weathers.findIndex((fav) => fav.id === id);
-  //   const { user, weathers } = dataParsed;
+    const foundIndex = favorites.findIndex((fav) => fav.id === id);
 
-  //   if (foundIndex === -1) {
-  //     console.log("hiii");
+    if (foundIndex === -1) {
+      setFavorites([...favorites, weather]);
+      return;
+    }
 
-  //     const anothers = weathers.map((item) => ({
-  //       id: item.id,
-  //       latitude: item.latitude,
-  //       longitude: item.longitude,
-  //       name: item.name,
-  //       favorite: item.favorite,
-  //     }));
-
-  //     const another = {
-  //       id,
-  //       latitude,
-  //       longitude,
-  //       name,
-  //       favorite: !isFavorite,
-  //     };
-
-  //     console.log("anothers => ", anothers);
-
-  //     setDataParsed({ user, weathers: [...anothers, another] });
-
-  //     localStorage.setItem(
-  //       "data",
-  //       JSON.stringify({ user, weathers: [...anothers, another] })
-  //     );
-
-  //     return;
-  //   }
-
-  //   // Quitar de favoritos
-  //   const dataFiltered = dataParsed.weathers.filter((fav) => fav.id !== id);
-
-  //   const asd = dataFiltered.map((item) => ({
-  //     id: item.id,
-  //     latitude: item.latitude,
-  //     longitude: item.longitude,
-  //     name: item.name,
-  //     favorite: item.favorite,
-  //   }));
-
-  //   setDataParsed({
-  //     user: dataParsed.user,
-  //     weathers: asd,
-  //   });
-
-  //   localStorage.setItem("data", JSON.stringify({ user, weathers: asd }));
-  // };
+    setFavorites(
+      favorites.filter((fav) => fav.id !== id) //!==
+    );
+  };
 
   return (
     <div className="weather-container">
       <div className="weather">
         <h4 className="weather-titule">Weather Location</h4>
         <h6 className="weather-zone">{timezone}</h6>
-        
-        <h1 className="weather-latitude">{latitude}</h1>
-
-        <h1 className="weather-longitude">{longitude}</h1>
+        <h1 className="weather-time">
+          {weatherInformation?.current_weather &&
+            weatherInformation?.current_weather.time}
+          {weatherInformation?.time && weatherInformation?.time}
+        </h1>
+        <div className="weather-lon-lati">
+          <div className="details">
+            <p>latitude</p>
+            <span className="weather-lat-lot">{latitude}</span>
+          </div>
+          <div className="details">
+            <p>longitude</p>
+            <span className="weather-lat-lot">{longitude}</span>
+          </div>
+        </div>
       </div>
       <div className="weather-actions">
-        {/* <div className="fav" onClick={handleFavorite}>
-          {isFavorite ? <FaHeart className="heart" /> : <FaRegHeart />}
-        </div> */}
         <div className="delete" onClick={handleEliminate}>
           <FaRegTimesCircle />
+        </div>
+        <div className="fav" onClick={handleFavorite}>
+          {isFavorite ? <FaHeart className="heart" /> : <FaRegHeart />}
         </div>
         <Link className="btn-see-more" to={`/weather/${id}`}>
           Ver más

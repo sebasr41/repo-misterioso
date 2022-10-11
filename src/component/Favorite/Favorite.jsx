@@ -1,13 +1,11 @@
 import './Favorite.css'
 
 const Favorite = ( { favorite } ) => {
-  const { name, colors} = favorite
+  const { timezone, temperature} = favorite
   return (
     <div className="fav-item">
-      <span className="item-name">{name}</span>
-      {
-        colors.map( color => <div key={color} className="item-color" style={{backgroundColor: color}}></div>)
-      }
+      <span className="item-name">{timezone}</span>
+      <span className="item-name">{temperature}</span>
     </div>
   )
 }
