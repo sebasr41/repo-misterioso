@@ -4,7 +4,6 @@ import { getWeather } from "../../service";
 import { useNavigate } from "react-router-dom";
 import "./WeatherCreation.css";
 import { WeathersContext } from "../../context/WeathersContext";
-import { UserContext } from "../../context/UserContext";
 
 const WeatherCreation = () => {
   const { weathers, setWeathers } = useContext(WeathersContext);
