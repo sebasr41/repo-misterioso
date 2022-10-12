@@ -78,9 +78,8 @@ const WeatherDisplay = () => {
           </div>
         </div>
       </div>
-      <button onClick={getData}>get info</button>
       <Link className="btn-back" to="/">
-        Volver al Inicio
+        Back to home
       </Link>
     </div>
   );

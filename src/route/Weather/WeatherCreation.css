@@ -1,6 +1,6 @@
 .background {
   width: 430px;
-  height: 520px;
+  height: 500px;
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
@@ -22,13 +22,12 @@
   right: -30px;
   bottom: -80px;
 }
-.weather-new-container,
-.weather-form {
+.weather-new-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 520px;
-  width: 430px;
+  height: 500px;
+  width: 400px;
   background-color: rgba(255, 255, 255, 0.07);
   position: absolute;
   transform: translate(-50%, -50%);
@@ -44,6 +43,30 @@
   letter-spacing: 0.5px;
   outline: none;
   border: none;
+  margin-top: 60px;
+}
+.weather-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 500px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.07);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+
 }
 .form-welcome {
   font-size: 32px;

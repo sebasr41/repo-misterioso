@@ -1,8 +1,8 @@
-import { useContext, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
-import "./Login.css";
+import { useContext, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+import './Login.css';
 
 const Login = () => {
   const { setCurrentUser } = useContext(UserContext);
@@ -18,7 +18,7 @@ const Login = () => {
   let dataToStorage;
 
   useEffect(() => {
-    dataStored = localStorage.getItem("data");
+    dataStored = localStorage.getItem('data');
 
     if (dataStored) {
       dataParsed = JSON.parse(dataStored);
@@ -39,7 +39,7 @@ const Login = () => {
         username: user.username,
         password: user.password,
       };
-      localStorage.setItem("data", JSON.stringify(dataToStorage));
+      localStorage.setItem('data', JSON.stringify(dataToStorage));
     }
 
     if (dataParsed) {
@@ -47,11 +47,11 @@ const Login = () => {
         username: user.username,
         password: user.password,
       };
-      localStorage.setItem("data", JSON.stringify(dataParsed));
+      localStorage.setItem('data', JSON.stringify(dataParsed));
     }
 
     setCurrentUser(user);
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -70,8 +70,8 @@ const Login = () => {
           className="input-form"
           type="text"
           placeholder="por ej. sebatech@gmail.com"
-          {...register("username", {
-            required: "Debe ingresar su nombre de usuario",
+          {...register('username', {
+            required: 'Debe ingresar su nombre de usuario',
           })}
         />
         <p>{errors.username?.message}</p>
@@ -80,8 +80,8 @@ const Login = () => {
           className="input-form"
           type="password"
           placeholder="Minimo 6 caracteres"
-          {...register("password", {
-            required: "Debe ingresar su contraseña",
+          {...register('password', {
+            required: 'Debe ingresar su contraseña',
           })}
         />
         <p>{errors.password?.message}</p>

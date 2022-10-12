@@ -9,7 +9,7 @@ import WeatherDisplay from './route/Weather/WeatherDisplay';
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route index element={<Home />} />

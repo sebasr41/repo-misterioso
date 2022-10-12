@@ -1,36 +1,27 @@
-.background{
+.background {
   width: 430px;
   height: 520px;
   position: absolute;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
 }
-.background .shape{
+.background .shape {
   height: 200px;
   width: 200px;
   position: absolute;
   border-radius: 50%;
 }
-.shape:first-child{
-  background: linear-gradient(
-      #9b22ea,
-      #bf23f6
-  );
+.shape:first-child {
+  background: linear-gradient(#2EF7D5, #2EB1F7);
   left: -80px;
   top: -80px;
 }
-.shape:last-child{
-  background: linear-gradient(
-      to right,
-      #ff512f,
-      #f09819
-  );
+.shape:last-child {
+  background: linear-gradient(to right, #eefb54, #eefb54);
   right: -30px;
   bottom: -80px;
 }
-
-
 
 .sign-in-container, .sign-in-form {
     display: flex;

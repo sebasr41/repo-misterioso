@@ -7,15 +7,14 @@ import { FavoritesContext } from '../../context/FavoritesContext';
 import getWeather from '../../service';
 
 const Weather = ({ weather }) => {
-  const { id, latitude, longitude, timezone, time } = weather;
+  const { id, latitude, longitude, timezone } = weather;
   const { weathers, setWeathers } = useContext(WeathersContext);
   const { favorites, setFavorites } = useContext(FavoritesContext);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [dataParsed, setDataParsed] = useState({});
+  const [dataParsed] = useState({});
   const [weatherInformation, setWeatherInformation] = useState(weather);
 
   useEffect(() => {
-
     const [weather] = weathers.filter((weather) => weather.id === id);
     if (!weather) {
       const dataStored = localStorage.getItem('data');
@@ -23,20 +22,28 @@ const Weather = ({ weather }) => {
       console.log('dataParsed => ', dataParsed);
       const [weather] = dataParsed.weathers.filter(
         (weather) => weather.id === id
-      );
-
+        );
       getWeather(weather)
         .then((data) => {
+          
           setWeatherInformation(data);
         })
         .catch((error) => console.log(error));
       return;
     }
+
     if (!weather.time) {
       getWeather(weather)
         .then((data) => {
           console.log('sin contexto solo ls => ', data);
-          setWeatherInformation(data);
+          
+          const dd = data.current_weather.time;
+          const date = new Date(dd);
+          console.log("date => ", date.toLocaleString("es-AR"))
+          setWeatherInformation({current_weather : {time : date.toLocaleString("es-AR")}} );
+
+          
+
         })
         .catch((error) => console.log(error));
     }

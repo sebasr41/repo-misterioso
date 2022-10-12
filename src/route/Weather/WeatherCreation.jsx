@@ -72,9 +72,7 @@ const WeatherCreation = () => {
       .catch((err) => console.log(err));
   };
 
-  const getData = () => {
-    console.log("weathers => ", weathers);
-  };
+  
 
   return (
     <div className="weather-new-container">
@@ -123,7 +121,6 @@ const WeatherCreation = () => {
         </button>
       </form>
 
-      {/* {<button onClick={getData}>Get data</button>} */}
     </div>
   );
 };

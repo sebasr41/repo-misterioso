@@ -3,20 +3,25 @@ import { get } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import Favorites from '../../component/Favorite/Favorites';
 import Weathers from '../../component/Weather/Weathers';
-import { FavoritesContext } from '../../context/FavoritesContext';
+import { UserContext } from '../../context/UserContext';
 import { WeathersContext } from '../../context/WeathersContext';
 import './Home.css';
 
 const Home = () => {
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const { weathers, setWeathers } = useContext(WeathersContext);
-  //const { favorites, setFavorites } = useContext(FavoritesContext);
-  // const [weathersStored, setWeathersStored] = useState([]);
- 
   const [search, setSearch] = useState('');
 
   let dataStored;
   let dataParsed;
   useEffect(() => {
+    const data = localStorage.getItem('data');
+
+    if (data) {
+      const dataStored = JSON.parse(data);
+      setCurrentUser(dataStored.user);
+    }
+
     dataStored = localStorage.getItem('data');
     if (weathers.length === 0 && dataStored) {
       dataParsed = JSON.parse(dataStored);
@@ -26,7 +31,6 @@ const Home = () => {
       console.log('dt', dataParsed);
     }
     console.log(' weathers ', weathers.length);
-  
   }, []);
   console.log('weathers => ', weathers);
 
@@ -41,6 +45,10 @@ const Home = () => {
 
   return (
     <>
+      <div className="background-home">
+        <div className="shape-home"></div>
+        <div className="shape-home"></div>
+      </div>
       <div className="search">
         <input
           className="input-search"
@@ -49,26 +57,40 @@ const Home = () => {
           value={search}
           onChange={handleSearch}
         />
-        <div className="asd">
+        <div className="results-">
           {!result.length > 0 && search && (
             <div>
-              <h1 className="asd">No hay coincidencias</h1>
+              <h1 className="weather-not-conc">No hay coincidencias</h1>
             </div>
           )}
           {!result.length > 0 && !search && (
             <div className="adding-weather">
               <h1 className="titule-add">No weather cards</h1>
               <p className="question-add">Do you want to add a new card?</p>
-              <Link className="btn-add" to="weather/create">
-                Create weather
-              </Link>
+              {currentUser ? (
+                <Link className="btn-add" to="weather/create">
+                  Create weather
+                </Link>
+              ) : (
+                <Link className="btn-add" to="login">
+                  log in to create a card
+                </Link>
+              )}
             </div>
           )}
         </div>
       </div>
       <div className="main-container">
-        <Weathers weathers={weathers} />
-        <Favorites />
+        {weathers.length !== 0 ? (
+          <>
+            <Weathers weathers={weathers} />
+            <Favorites />
+          </>
+        ) : (
+          <>
+            <Weathers weathers={weathers} />
+          </>
+        )}
       </div>
     </>
   );

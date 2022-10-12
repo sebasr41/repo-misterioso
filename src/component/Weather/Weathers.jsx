@@ -4,6 +4,7 @@ const Weathers = ({ weathers }) => {
   return (
     <>
       <div className="cards">
+
         {weathers.map((weather) => (
           <Weather key={weather.id} weather={weather} />
         ))}
