@@ -36,8 +36,10 @@ const WeatherCreation = () => {
     console.log(data);
     getWeather(data)
       .then((res) => {
-        console.log("res=>", res)
-        const { temperature, weathercode, windspeed,time } = res.current_weather;
+        console.log("res=>", res);
+        const { temperature, weathercode, windspeed, time } =
+          res.current_weather;
+        const date = new Date(time);
         const WeatherNew = {
           id: crypto.randomUUID(),
           name: data.name,
@@ -46,7 +48,7 @@ const WeatherCreation = () => {
           temperature,
           weathercode,
           windspeed,
-          time,
+          time: date.toLocaleString("es-AR"),
         };
 
         const WeatherSimpleInfo = {
@@ -70,8 +72,6 @@ const WeatherCreation = () => {
       })
       .catch((err) => console.log(err));
   };
-
-  
 
   return (
     <div className="weather-new-container">
@@ -119,7 +119,6 @@ const WeatherCreation = () => {
           Crear Weather
         </button>
       </form>
-
     </div>
   );
 };

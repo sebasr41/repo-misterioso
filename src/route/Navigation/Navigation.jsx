@@ -1,25 +1,25 @@
-import { useContext, useEffect, useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
-import { UserContext } from '../../context/UserContext';
-import './Navigation.css';
-import logo from '../../assets/logo.png';
+import { useContext, useEffect, useState } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+import "./Navigation.css";
+import logo from "../../assets/logo.png";
 const Navigation = () => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
-  
-  const csst = document.querySelector('#styles');
-  const item = document.querySelectorAll('.nav-link');
+
+  const csst = document.querySelector("#styles");
+  const item = document.querySelectorAll(".nav-link");
   function Indicator(e) {
-    csst.style.left = e.offsetLeft + 'px';
-    csst.style.width = e.offsetWidth + 'px';
+    csst.style.left = e.offsetLeft + "px";
+    csst.style.width = e.offsetWidth + "px";
   }
   item.forEach((link) => {
-    link.addEventListener('mousemove', (e) => {
+    link.addEventListener("mousemove", (e) => {
       Indicator(e.target);
     });
   });
 
   useEffect(() => {
-    const data = localStorage.getItem('data');
+    const data = localStorage.getItem("data");
     console.log(data);
     if (data) {
       const dataStored = JSON.parse(data);
@@ -27,10 +27,11 @@ const Navigation = () => {
     }
   }, []);
 
-  console.log('current', currentUser);
+  console.log("current", currentUser);
   const handleSignOut = () => {
     setCurrentUser(null);
   };
+
   return (
     <>
       <div className="navigation">
