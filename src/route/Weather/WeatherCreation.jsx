@@ -26,7 +26,7 @@ const WeatherCreation = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      timezone: "Europe/London",
+      name: "Europe/London",
       latitude: "51.5002",
       longitude: "-0.1262",
     },
@@ -40,7 +40,7 @@ const WeatherCreation = () => {
         const { temperature, weathercode, windspeed,time } = res.current_weather;
         const WeatherNew = {
           id: crypto.randomUUID(),
-          timezone: data.timezone,
+          name: data.name,
           latitude: data.latitude,
           longitude: data.longitude,
           temperature,
@@ -51,7 +51,7 @@ const WeatherCreation = () => {
 
         const WeatherSimpleInfo = {
           id: WeatherNew.id,
-          timezone: WeatherNew.timezone,
+          name: WeatherNew.name,
           latitude: WeatherNew.latitude,
           longitude: WeatherNew.longitude,
         };
@@ -91,7 +91,7 @@ const WeatherCreation = () => {
           className="input-weather-name-form"
           type="text"
           placeholder="Nombre de la ciudad"
-          {...register("timezone", {
+          {...register("name", {
             required: "You must enter a name",
           })}
         />

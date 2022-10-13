@@ -7,7 +7,7 @@ import { FavoritesContext } from '../../context/FavoritesContext';
 import getWeather from '../../service';
 
 const Weather = ({ weather }) => {
-  const { id, latitude, longitude, timezone } = weather;
+  const { id, latitude, longitude, name } = weather;
   const { weathers, setWeathers } = useContext(WeathersContext);
   const { favorites, setFavorites } = useContext(FavoritesContext);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -76,7 +76,7 @@ const Weather = ({ weather }) => {
     <div className="weather-container">
       <div className="weather">
         <h4 className="weather-titule">Weather Location</h4>
-        <h6 className="weather-zone">{timezone}</h6>
+        <h6 className="weather-zone">{name}</h6>
         <h1 className="weather-time">
           {weatherInformation?.current_weather &&
             weatherInformation?.current_weather.time}
@@ -85,7 +85,7 @@ const Weather = ({ weather }) => {
         <div className="weather-lon-lati">
           <div className="details">
             <p>latitude</p>
-            <span className="weather-lat-lot">{latitude}</span>
+            <span className="weather-latt-lot">{latitude}</span>
           </div>
           <div className="details">
             <p>longitude</p>
@@ -101,7 +101,7 @@ const Weather = ({ weather }) => {
           {isFavorite ? <FaHeart className="heart" /> : <FaRegHeart />}
         </div>
         <Link className="btn-see-more" to={`/weather/${id}`}>
-          Ver más
+        See more
         </Link>
       </div>
     </div>

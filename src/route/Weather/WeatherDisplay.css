@@ -24,13 +24,13 @@
 }
 .weather-display-img {
   width: 22%;
-  margin-left: 39%;
+  justify-content: center;
 }
 .weather-display-zone {
   text-align: center;
   color: #b3b3b3;
   font-size: 15px;
-  letter-spacing: 5px;
+  letter-spacing: 2px;
   font-weight: 300;
   margin-bottom: 25px;
 }

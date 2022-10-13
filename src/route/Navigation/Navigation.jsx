@@ -59,6 +59,7 @@ const Navigation = () => {
               </Link>
             )}
             <div id="styles"></div>
+            <span className="nav-link"> Welcome</span>
           </div>
         </div>
       </div>

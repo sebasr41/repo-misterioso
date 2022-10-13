@@ -1,4 +1,6 @@
 .weather-container {
+  display: flex;
+  transition: box-shadow 0.2s ease;
   flex-direction: column;
   background-color: rgba(255,255,255,0.06);
   backdrop-filter: blur(20px);
@@ -28,7 +30,7 @@
     text-align: center;
     color: #b3b3b3;
     font-size: 15px;
-    letter-spacing: 5px;
+    letter-spacing: 1pxpx;
     font-weight: 300;
     margin-bottom: 25px;
   }
@@ -40,14 +42,17 @@
     margin-top: 30px;
   }
   .details {
-    text-align: center;
+    justify-content: center;
+    text-align: start;
     font-size: 13px;
     letter-spacing: 1px;
     font-weight: 600;
     color: #fff;
   }
+
   .weather-lon-lat {
     color: #b3b3b3;
+    justify-content: center;
   }
   .weather-time{
     text-align: center;
@@ -63,7 +68,7 @@
     font-size: 12px;
     border-radius: 5px;
     transition: color 0.2s ease, background-color 0.2s ease;
-    color: #b3b3b3;
+    color: brown;
     margin-left: 20px;
   }
   
@@ -86,7 +91,7 @@
     font-size: 12px;
     border-radius: 5px;
     transition: color 0.2s ease, background-color 0.2s ease;
-    color: #b3b3b3;
+    color: aquamarine;
     margin-right: 20px;
   }
   
@@ -102,7 +107,7 @@
     font-size: 12px;
     border-radius: 5px;
     transition: color 0.2s ease, background-color 0.2s ease;
-    color: #b3b3b3;
+    color: red;
     margin-left: 20px;
   }
 
